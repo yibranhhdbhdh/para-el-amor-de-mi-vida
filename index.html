@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>El universo donde coincidimos ✨</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+            font-family: "Segoe UI", Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* ==============================
+           INTRO
+        ============================== */
+
+        #intro {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 2s ease;
+        }
+
+        .intro-contenido {
+            width: min(900px, 90%);
+            text-align: center;
+        }
+
+        .intro-texto {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: aparecer 2.2s forwards;
+        }
+
+        .intro-texto:nth-child(2) {
+            animation-delay: 2.4s;
+        }
+
+        .intro-texto:nth-child(3) {
+            animation-delay: 4.6s;
+        }
+
+        .intro-grande {
+            font-size: clamp(28px, 4vw, 55px);
+            line-height: 1.3;
+            font-weight: 700;
+        }
+
+        .intro-medio {
+            font-size: clamp(20px, 2.4vw, 30px);
+            color: #aaa;
+            margin-top: 25px;
+        }
+
+        .intro-wendy {
+            font-size: clamp(30px, 4vw, 52px);
+            color: #ffd1dc;
+            margin-top: 35px;
+            font-weight: 700;
+        }
+
+        #estrellaInicio {
+            margin: 70px auto 0;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0;
+
+            box-shadow:
+                0 0 12px white,
+                0 0 30px #9ecbff,
+                0 0 70px #7d5cff;
+
+            animation:
+                aparecer 2s forwards 6.8s,
+                pulsar 1.8s infinite alternate 8.8s;
+        }
+
+        #tocaEstrella {
+            opacity: 0;
+            color: #888;
+            font-size: 14px;
+            margin-top: 22px;
+            animation: aparecer 2s forwards 8s;
+        }
+
+        @keyframes aparecer {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulsar {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.45);
+            }
+        }
+
+
+        /* ==============================
+           UNIVERSO
+        ============================== */
+
+        #universo {
+            position: fixed;
+            inset: 0;
+
+            opacity: 0;
+            pointer-events: none;
+
+            transition: opacity 2s ease;
+
+            background:
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(75, 40, 120, .35),
+                    transparent 40%
+                ),
+                radial-gradient(
+                    circle at 20% 30%,
+                    rgba(0, 90, 170, .25),
+                    transparent 30%
+                ),
+                #020208;
+        }
+
+        #universo.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #fondoEstrellas {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+        }
+
+        .mini-estrella {
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .titulo-universo {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            text-align: center;
+            z-index: 5;
+        }
+
+        .titulo-universo h1 {
+            margin: 0;
+            font-size: clamp(25px, 3vw, 42px);
+        }
+
+        .titulo-universo p {
+            color: #aaa;
+        }
+
+
+        /* ==============================
+           ESTRELLAS
+        ============================== */
+
+        .estrella-recuerdo {
+            position: absolute;
+
+            width: 25px;
+            height: 25px;
+
+            border-radius: 50%;
+            background: white;
+
+            cursor: pointer;
+            z-index: 10;
+
+            box-shadow:
+                0 0 10px white,
+                0 0 25px #7aa7ff,
+                0 0 55px #4d5fff;
+
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease;
+        }
+
+        .estrella-recuerdo:hover {
+            transform: scale(1.55);
+
+            box-shadow:
+                0 0 15px white,
+                0 0 40px #c8b5ff,
+                0 0 90px #7b5cff;
+        }
+
+        .estrella-recuerdo::after {
+            content: attr(data-label);
+
+            position: absolute;
+            top: 35px;
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            white-space: nowrap;
+
+            color: #ccc;
+            font-size: 13px;
+        }
+
+        #e1 {
+            left: 15%;
+            top: 35%;
+        }
+
+        #e2 {
+            left: 32%;
+            top: 67%;
+        }
+
+        #e3 {
+            left: 50%;
+            top: 37%;
+        }
+
+        #e4 {
+            left: 67%;
+            top: 67%;
+        }
+
+        #e5 {
+            left: 80%;
+            top: 30%;
+        }
+
+        #eFinal {
+            left: 89%;
+            top: 53%;
+        }
+
+        .estrella-bloqueada {
+            background: #444;
+            cursor: not-allowed;
+
+            box-shadow:
+                0 0 15px rgba(255,255,255,.25);
+        }
+
+        .estrella-bloqueada::before {
+            content: "🔒";
+
+            position: absolute;
+            inset: -8px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 18px;
+        }
+
+
+        /* ==============================
+           MODAL DEL RECUERDO
+        ============================== */
+
+        #modal {
+            position: fixed;
+            inset: 0;
+
+            display: none;
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+
+            background: rgba(0,0,0,.92);
+            backdrop-filter: blur(12px);
+
+            z-index: 200;
+        }
+
+        #modal.visible {
+            display: flex;
+            animation: modalEntrada .7s ease;
+        }
+
+        @keyframes modalEntrada {
+            from {
+                opacity: 0;
+                transform: scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-carta {
+            width: min(850px, 96%);
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 40px;
+
+            text-align: center;
+
+            border-radius: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.12),
+                    rgba(255,255,255,.04)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.15);
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.7);
+        }
+
+        .modal-carta h2 {
+            margin-top: 0;
+            font-size: clamp(30px, 4vw, 48px);
+        }
+
+
+        /* FOTO */
+
+        #modalFoto {
+            display: block;
+
+            width: 100%;
+            max-width: 700px;
+            max-height: 500px;
+
+            object-fit: contain;
+
+            margin: 25px auto;
+
+            border-radius: 22px;
+
+            background: #090909;
+
+            box-shadow:
+                0 15px 50px rgba(0,0,0,.55);
+        }
+
+
+        #modalTexto {
+            max-width: 700px;
+
+            margin:
+                30px auto 10px;
+
+            color: #ddd;
+
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+
+        .boton {
+            margin-top: 20px;
+
+            padding: 14px 28px;
+
+            border: none;
+            border-radius: 999px;
+
+            background: white;
+            color: black;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            transition: .25s;
+        }
+
+        .boton:hover {
+            transform: scale(1.07);
+        }
+
+
+        /* ==============================
+           CARTA FINAL
+        ============================== */
+
+        #final {
+            position: fixed;
+            inset: 0;
+
+            display: none;
+
+            background: black;
+
+            overflow-y: auto;
+
+            padding:
+                80px 20px 120px;
+
+            z-index: 300;
+        }
+
+        #final.visible {
+            display: block;
+            animation: aparecerFinal 2s ease;
+        }
+
+        @keyframes aparecerFinal {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .final-contenido {
+            width: min(820px, 92%);
+            margin: auto;
+            text-align: center;
+        }
+
+        .final-contenido p {
+            margin: 25px 0;
+
+            color: #ddd;
+
+            font-size:
+                clamp(19px, 2vw, 25px);
+
+            line-height: 1.9;
+        }
+
+        .final-contenido .destacado {
+            color: #ffd1dc;
+
+            font-size:
+                clamp(30px, 4vw, 50px);
+
+            font-weight: 700;
+        }
+
+        .continuara {
+            margin-top: 70px;
+
+            font-size:
+                clamp(35px, 5vw, 60px);
+
+            font-weight: 800;
+        }
+
+
+        /* PRÓXIMO RECUERDO */
+
+        .proximo {
+            width: min(470px, 92%);
+
+            margin:
+                80px auto 30px;
+
+            padding: 30px;
+
+            border:
+                1px solid rgba(255,255,255,.25);
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,.04);
+        }
+
+        .estrella-vacia {
+            width: 42px;
+            height: 42px;
+
+            margin:
+                0 auto 20px;
+
+            border:
+                2px solid white;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 25px rgba(255,255,255,.5);
+        }
+
+        .fecha {
+            color: #888;
+        }
+
+
+        /* CELULAR */
+
+        @media (max-width: 700px) {
+
+            .estrella-recuerdo::after {
+                display: none;
+            }
+
+            .modal-carta {
+                padding: 22px;
+            }
+
+            #modalFoto {
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =====================================
+         INTRO
+    ====================================== -->
+
+    <section id="intro">
+
+        <div class="intro-contenido">
+
+            <div class="intro-texto intro-grande">
+                Entre millones de personas había una posibilidad
+                diminuta de encontrarte
+            </div>
+
+            <div class="intro-texto intro-medio">
+                y aun así coincidimos
+            </div>
+
+            <div class="intro-texto intro-wendy">
+                hola mi wendy
+            </div>
+
+            <div id="estrellaInicio"></div>
+
+            <div id="tocaEstrella">
+                toca la estrella ✨
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         UNIVERSO
+    ====================================== -->
+
+    <section id="universo">
+
+        <div id="fondoEstrellas"></div>
+
+        <div class="titulo-universo">
+
+            <h1>
+                El universo donde coincidimos
+            </h1>
+
+            <p>
+                cada estrella guarda un pedacito de nosotros
+            </p>
+
+        </div>
+
+
+        <div
+            class="estrella-recuerdo"
+            id="e1"
+            data-id="universidad"
+            data-label="La universidad">
+        </div>
+
+
+        <div
+            class="estrella-recuerdo"
+            id="e2"
+            data-id="cuentos"
+            data-label="Los cuentos">
+        </div>
+
+
+        <div
+            class="estrella-recuerdo"
+            id="e3"
+            data-id="pampulin"
+            data-label="Pampulín">
+        </div>
+
+
+        <div
+            class="estrella-recuerdo"
+            id="e4"
+            data-id="nosotros"
+            data-label="Nosotros">
+        </div>
+
+
+        <div
+            class="estrella-recuerdo"
+            id="e5"
+            data-id="ojos"
+            data-label="Tus ojos">
+        </div>
+
+
+        <div
+            class="estrella-recuerdo estrella-bloqueada"
+            id="eFinal"
+            data-label="La última estrella">
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         RECUERDO
+    ====================================== -->
+
+    <section id="modal">
+
+        <div class="modal-carta">
+
+            <h2 id="modalTitulo"></h2>
+
+            <img
+                id="modalFoto"
+                src=""
+                alt="Nuestro recuerdo"
+            >
+
+            <p id="modalTexto"></p>
+
+            <button
+                class="boton"
+                onclick="cerrarModal()"
+            >
+                volver al universo ✨
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         FINAL
+    ====================================== -->
+
+    <section id="final">
+
+        <div class="final-contenido">
+
+
+            <p class="destacado">
+                mi niña
+            </p>
+
+
+            <p>
+                podría llenar esta página con cada recuerdo
+                que tengo contigo y aun así sentiría
+                que me faltó algo
+            </p>
+
+
+            <p>
+                porque lo más bonito de nuestra historia
+                no son solamente las cosas que ya vivimos
+            </p>
+
+
+            <p>
+                es pensar que todavía existen recuerdos nuestros
+                que ninguno de los dos conoce
+            </p>
+
+
+            <p>
+                lugares a los que todavía no hemos ido
+            </p>
+
+
+            <p>
+                abrazos que todavía no nos hemos dado
+            </p>
+
+
+            <p>
+                noches en las que todavía
+                no te he contado un cuento
+            </p>
+
+
+            <p>
+                fotografías que todavía no existen
+            </p>
+
+
+            <p>
+                y versiones de nosotros
+                que todavía no hemos conocido
+            </p>
+
+
+            <p>
+                hace tiempo llegaste a mi vida siendo simplemente wendy
+                y poco a poco tu nombre terminó apareciendo
+                en mis cosas favoritas,
+                en mis recuerdos,
+                en mi computadora,
+                en mi teléfono
+                y hasta en mi piel
+            </p>
+
+
+            <p>
+                pero hay un lugar en el que llegaste
+                mucho antes que a todos esos
+            </p>
+
+
+            <p class="destacado">
+                mi corazoncito
+            </p>
+
+
+            <p>
+                y si algún día vuelves a entrar
+                a esta página quiero que recuerdes algo
+            </p>
+
+
+            <p>
+                esto no está terminado
+            </p>
+
+
+            <p>
+                porque mientras sigamos eligiéndonos
+                siempre habrá una nueva estrella que agregar
+            </p>
+
+
+            <p class="destacado">
+                te amo mi wendy ❤️
+            </p>
+
+
+            <div class="continuara">
+                continuará...
+            </div>
+
+
+            <div class="proximo">
+
+                <div class="estrella-vacia"></div>
+
+                <h3>
+                    nuestro próximo recuerdo
+                </h3>
+
+                <div
+                    class="fecha"
+                    id="fechaActual">
+                </div>
+
+                <p>
+                    todavía no sabemos qué será,
+                    pero algún día esta estrella
+                    dejará de estar vacía.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+        /* =====================================
+           RECUERDOS Y FOTOS
+
+           IMPORTANTE:
+           index.html y las imágenes están
+           EN LA MISMA CARPETA.
+        ====================================== */
+
+
+        const recuerdos = {
+
+
+            universidad: {
+
+                titulo:
+                    "La noche en que empezamos a hablar ✨",
+
+                foto:
+                    "uvm.jpeg",
+
+                texto: `
+                    Entre clases, nervios y un examen esperando,
+                    terminó apareciendo una conversación
+                    que ninguno de los dos sabía
+                    hasta dónde iba a llegar.
+                    <br><br>
+
+                    Me gusta pensar que mientras estudiábamos
+                    para una cosa,
+                    la vida silenciosamente
+                    estaba empezando otra.
+                `
+            },
+
+
+
+            cuentos: {
+
+                titulo:
+                    "Los cuentos antes de dormir 🌙",
+
+                /* ESTA FOTO ES PNG */
+
+                foto:
+                    "cuento.png",
+
+                texto: `
+                    Hay noches que parecen pequeñas
+                    hasta que, con el tiempo,
+                    uno descubre que se volvieron hogar.
+                    <br><br>
+
+                    Me encanta saber que entre sueño,
+                    palabras y silencio,
+                    tuvimos nuestro propio ritual.
+                    <br><br>
+
+                    Y espero que todavía me queden
+                    muchísimos cuentos por contarte.
+                `
+            },
+
+
+
+            pampulin: {
+
+                titulo:
+                    "Pampulín 🧸",
+
+                foto:
+                    "pampulin.jpeg",
+
+                texto: `
+                    Algunas cosas empiezan siendo
+                    una tontería,
+                    un nombre,
+                    un objeto
+                    o una broma.
+                    <br><br>
+
+                    Y luego, sin darnos cuenta,
+                    terminan formando parte
+                    de nuestro propio idioma.
+                    <br><br>
+
+                    Pampulín es una de esas pequeñas cosas
+                    que quizá para otros no significan nada,
+                    pero para nosotros sí.
+                `
+            },
+
+
+
+            nosotros: {
+
+                titulo:
+                    "Nosotros 📷❤️",
+
+                foto:
+                    "nosotros.jpeg",
+
+                texto: `
+                    Cada fotografía guarda algo
+                    que no cabe completamente
+                    dentro de una imagen.
+                    <br><br>
+
+                    Una voz,
+                    un momento,
+                    una mirada,
+                    algo que pasó antes
+                    y algo que pasó después.
+                    <br><br>
+
+                    Y me encanta pensar
+                    que todavía nos faltan
+                    muchísimas fotografías por tomar.
+                `
+            },
+
+
+
+            ojos: {
+
+                titulo:
+                    "Tus ojitos ❤️",
+
+                foto:
+                    "ojitos.jpeg",
+
+                texto: `
+                    Hay cosas que uno quiere recordar.
+                    <br><br>
+
+                    Y hay otras que uno quiere
+                    llevar consigo.
+                    <br><br>
+
+                    Tus ojos terminaron siendo
+                    una de esas cosas para mí.
+                    <br><br>
+
+                    Tanto,
+                    que decidí convertirlos
+                    en algo que pudiera acompañarme
+                    incluso en mi propia piel.
+                `
+            }
+
+        };
+
+
+
+        /* =====================================
+           VARIABLES
+        ====================================== */
+
+        const visitadas = new Set();
+
+        const intro =
+            document.getElementById("intro");
+
+        const universo =
+            document.getElementById("universo");
+
+        const estrellaInicio =
+            document.getElementById("estrellaInicio");
+
+        const modal =
+            document.getElementById("modal");
+
+        const final =
+            document.getElementById("final");
+
+        const eFinal =
+            document.getElementById("eFinal");
+
+
+
+        /* =====================================
+           ENTRAR AL UNIVERSO
+        ====================================== */
+
+        estrellaInicio.addEventListener(
+            "click",
+            () => {
+
+                intro.style.opacity = "0";
+
+                setTimeout(
+                    () => {
+
+                        intro.style.display =
+                            "none";
+
+                        universo.classList.add(
+                            "visible"
+                        );
+
+                    },
+                    1800
+                );
+
+            }
+        );
+
+
+
+        /* =====================================
+           ABRIR UNA ESTRELLA
+        ====================================== */
+
+        document
+            .querySelectorAll(
+                ".estrella-recuerdo:not(#eFinal)"
+            )
+            .forEach(
+                estrella => {
+
+                    estrella.addEventListener(
+                        "click",
+                        () => {
+
+
+                            const id =
+                                estrella.dataset.id;
+
+
+                            const recuerdo =
+                                recuerdos[id];
+
+
+                            /* TÍTULO */
+
+                            document
+                                .getElementById(
+                                    "modalTitulo"
+                                )
+                                .innerHTML =
+                                recuerdo.titulo;
+
+
+                            /* FOTO */
+
+                            document
+                                .getElementById(
+                                    "modalFoto"
+                                )
+                                .src =
+                                recuerdo.foto;
+
+
+                            /* TEXTO */
+
+                            document
+                                .getElementById(
+                                    "modalTexto"
+                                )
+                                .innerHTML =
+                                recuerdo.texto;
+
+
+                            /* MOSTRAR VENTANA */
+
+                            modal.classList.add(
+                                "visible"
+                            );
+
+
+                            /* MARCAR COMO VISITADA */
+
+                            visitadas.add(id);
+
+
+                            /* CAMBIAR COLOR */
+
+                            estrella.style.background =
+                                "#ffd1dc";
+
+
+                            estrella.style.boxShadow =
+                                "0 0 15px white," +
+                                "0 0 35px #ff7aa8," +
+                                "0 0 80px #ff4d88";
+
+
+                            revisarDesbloqueo();
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =====================================
+           CERRAR RECUERDO
+        ====================================== */
+
+        function cerrarModal() {
+
+            modal.classList.remove(
+                "visible"
+            );
+
+        }
+
+
+
+        /* =====================================
+           DESBLOQUEAR ESTRELLA FINAL
+        ====================================== */
+
+        function revisarDesbloqueo() {
+
+            if (
+                visitadas.size ===
+                Object.keys(recuerdos).length
+            ) {
+
+                eFinal.classList.remove(
+                    "estrella-bloqueada"
+                );
+
+
+                eFinal.style.background =
+                    "#ffd1dc";
+
+
+                eFinal.style.boxShadow =
+                    "0 0 15px white," +
+                    "0 0 40px #ff91b5," +
+                    "0 0 100px #ff4d88";
+
+            }
+
+        }
+
+
+
+        /* =====================================
+           ABRIR CARTA FINAL
+        ====================================== */
+
+        eFinal.addEventListener(
+            "click",
+            () => {
+
+
+                if (
+                    visitadas.size !==
+                    Object.keys(recuerdos).length
+                ) {
+
+                    return;
+
+                }
+
+
+                universo.style.opacity =
+                    "0";
+
+
+                setTimeout(
+                    () => {
+
+                        universo.style.display =
+                            "none";
+
+                        final.classList.add(
+                            "visible"
+                        );
+
+                    },
+                    1800
+                );
+
+            }
+        );
+
+
+
+        /* =====================================
+           ESTRELLAS DEL FONDO
+        ====================================== */
+
+        const fondo =
+            document.getElementById(
+                "fondoEstrellas"
+            );
+
+
+        for (
+            let i = 0;
+            i < 220;
+            i++
+        ) {
+
+            const estrella =
+                document.createElement(
+                    "div"
+                );
+
+
+            estrella.className =
+                "mini-estrella";
+
+
+            estrella.style.left =
+                Math.random() * 100 + "%";
+
+
+            estrella.style.top =
+                Math.random() * 100 + "%";
+
+
+            const tamaño =
+                Math.random() * 2.5 + 1;
+
+
+            estrella.style.width =
+                tamaño + "px";
+
+
+            estrella.style.height =
+                tamaño + "px";
+
+
+            estrella.style.opacity =
+                Math.random() * .8 + .2;
+
+
+            fondo.appendChild(
+                estrella
+            );
+
+        }
+
+
+
+        /* =====================================
+           FECHA ACTUAL
+        ====================================== */
+
+        const fecha =
+            new Date();
+
+
+        document
+            .getElementById(
+                "fechaActual"
+            )
+            .textContent =
+            fecha.toLocaleDateString(
+                "es-MX",
+                {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+    </script>
+
+</body>
+</html>
